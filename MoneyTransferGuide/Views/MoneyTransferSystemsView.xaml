@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:prism="http://prismlibrary.com"
+             xmlns:materialFrame="clr-namespace:Sharpnado.MaterialFrame;assembly=Sharpnado.MaterialFrame"
+             x:Class="MoneyTransferGuide.Views.MoneyTransferSystemsView">
+    <ContentView.Content>
+        <RefreshView IsRefreshing="{Binding IsBusy}" RefreshColor="{DynamicResource Material.Color.Primary}"
+                     Command="{Binding RefreshCommand}">
+            <CollectionView Margin="10,0,10,0" ItemsSource="{Binding MoneyTransferSystems}" SelectionMode="None"
+                            SelectedItem="{Binding SelectedMoneyTransferSystem}"
+                            VerticalScrollBarVisibility="Never">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="18" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <ui:MaterialCard ClickCommand="{prism:NavigateTo 'MoneyTransferSystemPage'}"
+                                         ClickCommandParameter="{Binding .}" CornerRadius="2" Elevation="3" 
+                                         Padding="5,5,5,5"
+                                         MinimumHeightRequest="110"
+                                         IsClickable="True" IsClippedToBounds="True">
+                            <StackLayout Orientation="Horizontal">
+                                <forms:CachedImage Source="{Binding Logo}" Aspect="AspectFit" WidthRequest="80"
+                                                   HeightRequest="100"
+                                                   VerticalOptions="Start" />
+                                <StackLayout>
+                                    <ui:MaterialLabel Text="{Binding SystemName}" VerticalTextAlignment="Start"
+                                                      FontSize="{OnIdiom Phone=22, Tablet=24}" />
+                                    <ui:MaterialLabel Text="{Binding Info}" TextType="Html" LineBreakMode="TailTruncation" MaxLines="3"
+                                                      VerticalTextAlignment="Start"
+                                                      FontSize="{OnIdiom Phone=16, Tablet=18}" />
+                                </StackLayout>
+                            </StackLayout>
+                        </ui:MaterialCard>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+    </ContentView.Content>
+</ContentView>

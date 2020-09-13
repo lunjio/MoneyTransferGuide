@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             ui:MaterialNavigationPage.AppBarColor="{DynamicResource Material.Color.Primary}"
+             ui:MaterialNavigationPage.StatusBarColor="{DynamicResource Material.Color.PrimaryVariant}"
+             x:Class="MoneyTransferGuide.Views.StartPage">
+    <ContentPage.Content>
+        <forms:CachedImage Aspect="AspectFit" Source="SplashLogo" WidthRequest="200" HeightRequest="150"/>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<helpers:MaterialContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:materialDesignControls="clr-namespace:Plugin.MaterialDesignControls;assembly=Plugin.MaterialDesignControls"
+             x:Class="MoneyTransferGuide.Views.MainPage"
+             xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:converters="clr-namespace:MoneyTransferGuide.Converters;assembly=MoneyTransferGuide"
+             xmlns:tabs="clr-namespace:Sharpnado.Presentation.Forms.CustomViews.Tabs;assembly=Sharpnado.Presentation.Forms"
+             xmlns:customViews="clr-namespace:Sharpnado.Presentation.Forms.CustomViews;assembly=Sharpnado.Presentation.Forms"
+             xmlns:local="clr-namespace:MoneyTransferGuide.Views;assembly=MoneyTransferGuide"
+             xmlns:helpers="clr-namespace:MoneyTransferGuide.Helpers;assembly=MoneyTransferGuide"
+             ui:MaterialNavigationPage.AppBarTitleTextAlignment="Center"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <Grid RowDefinitions="*,60">
+        <tabs:ViewSwitcher x:Name="Switcher"
+                           Grid.Row="0"
+                           Animate="True"
+                           SelectedIndex="{Binding SelectedViewModelIndex, Mode=TwoWay}">
+                <customViews:LazyView x:TypeArguments="local:MoneyTransferInfoView" BindingContext="{Binding MoneyTransferInfoViewModel}"/>
+                <customViews:LazyView x:TypeArguments="local:MoneyTransferSystemsView" BindingContext="{Binding MoneyTransferSystemsViewModel}"/>
+        </tabs:ViewSwitcher>
+        <tabs:TabHostView Grid.Row="1"
+                              x:Name="TabHostView"
+                              BackgroundColor="WhiteSmoke"
+                              TabType="Fixed"
+                              SelectedIndex="{Binding Source={x:Reference Switcher}, Path=SelectedIndex, Mode=TwoWay}">
+            <tabs:TabHostView.Tabs>
+                <tabs:BottomTabItem IconImageSource="money_bill.png" 
+                                    
+                                        SelectedTabColor="{DynamicResource Material.Color.Secondary}" 
+                                        UnselectedIconColor="{DynamicResource Material.Color.Primary}" IsTextVisible="True" Label="Переводы"/>
+                <tabs:BottomTabItem IconImageSource="landmark.png" 
+                                        SelectedTabColor="{DynamicResource Material.Color.Secondary}"
+                                        UnselectedIconColor="{DynamicResource Material.Color.Primary}" IsTextVisible="True" Label="Денежные системы"/>
+            </tabs:TabHostView.Tabs>
+        </tabs:TabHostView>
+            <BoxView Grid.Row="1" Color="{DynamicResource Material.Color.PrimaryVariant}" HeightRequest="1" VerticalOptions="Start"/>
+        </Grid>
+    </ContentPage.Content>
+</helpers:MaterialContentPage>

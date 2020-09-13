@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:MoneyTransferGuide.Converters;assembly=MoneyTransferGuide"
+             xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+             xmlns:materialDesignControls="clr-namespace:Plugin.MaterialDesignControls;assembly=Plugin.MaterialDesignControls"
+             x:Name="ContentView"
+             x:Class="MoneyTransferGuide.Views.MoneyTransferInfoView">
+    <ContentView.Content>
+        <RefreshView x:Name="MainStackLayout" Command="{Binding DisplayMoneySendInfo}" IsRefreshing="{Binding IsBusy}"
+                     RefreshColor="{DynamicResource Material.Color.PrimaryVariant}">
+            <StackLayout Margin="10,0,10,0">
+                <Expander IsExpanded="{Binding IsExpanded, Mode=TwoWay}" x:Name="Expander">
+                    <Expander.Header>
+                        <Label
+                            IsVisible="{Binding Source={x:Reference Name=Expander}, Path=IsExpanded, Converter={converters:BooleanInverseConverter}}"
+                            Text="{Binding TransferParameters}"
+                            HorizontalTextAlignment="Center"
+                            FontAttributes="Bold"
+                            TextDecorations="Underline"
+                            TextColor="{DynamicResource Material.Color.Primary}"
+                            FontSize="22" />
+                    </Expander.Header>
+                    <Expander.Content>
+                        <StackLayout />
+                    </Expander.Content>
+                </Expander>
+                <StackLayout IsVisible="{Binding Source={x:Reference Name=Expander}, Path=IsExpanded}">
+                    <ui:MaterialTextField Choices="{Binding Countries}"
+                                          ChoicesResultBindingName="Name"
+                                          InputType="Choice"
+                                          ChoiceSelectedCommand="{Binding OnCountryFromChangedCommand}"
+                                          ErrorText="Укажите страну отправления"
+                                          HasError="{Binding CountryFromIsUnfilled}"
+                                          BackgroundColor="{DynamicResource Material.Color.Background}"
+                                          UnderlineColor="{DynamicResource Material.Color.PrimaryVariant}"
+                                          ChoicesBindingName="Name"
+                                          AlwaysShowUnderline="True"
+                                          Placeholder="Страна отправления"
+                                          SelectedChoice="{Binding CountryFrom}" />
+                    <ui:MaterialTextField Choices="{Binding Countries}"
+                                          ChoicesResultBindingName="Name"
+                                          BackgroundColor="{DynamicResource Material.Color.Background}"
+                                          UnderlineColor="{DynamicResource Material.Color.PrimaryVariant}"
+                                          ErrorText="Укажите страну получения"
+                                          ChoiceSelectedCommand="{Binding OnCountryToChangedCommand}"
+                                          HasError="{Binding CountryToIsUnfilled}"
+                                          InputType="Choice"
+                                          ChoicesBindingName="Name"
+                                          AlwaysShowUnderline="True"
+                                          Placeholder="Страна получения"
+                                          SelectedChoice="{Binding CountryTo}" />
+                    <materialDesignControls:MaterialChipsGroup SelectedItem="{Binding Currency}"
+                                                               SelectedBackgroundColor="{DynamicResource Material.Color.PrimaryVariant}"
+                                                               SelectedTextColor="{DynamicResource Material.Color.OnBackground}">
+                        <materialDesignControls:MaterialChipsGroup.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>RUR</x:String>
+                                <x:String>USD</x:String>
+                                <x:String>EUR</x:String>
+                            </x:Array>
+                        </materialDesignControls:MaterialChipsGroup.ItemsSource>
+                    </materialDesignControls:MaterialChipsGroup>
+                    <ui:MaterialTextField InputType="Numeric" Text="{Binding Summ}"
+                                          AlwaysShowUnderline="True"
+                                          ErrorText="Укажите сумму перевода"
+                                          HasError="{Binding SummIsUnfilled}"
+                                          BackgroundColor="{DynamicResource Material.Color.Background}"
+                                          UnderlineColor="{DynamicResource Material.Color.PrimaryVariant}"
+                                          Placeholder="Сумма перевода" />
+                    <ui:MaterialButton Command="{Binding GetMoneySendInfoCommand}"
+                                       TextColor="{DynamicResource Material.Color.OnBackground}"
+                                       BorderColor="{DynamicResource PrimaryLightColor}" Text="Показать"
+                                       BackgroundColor="{DynamicResource Material.Color.PrimaryVariant}"
+                                       ButtonType="Elevated" />
+                </StackLayout>
+                <StackLayout
+                    IsVisible="{Binding Source={x:Reference Name=Expander}, Path=IsExpanded, Converter={converters:BooleanInverseConverter}}">
+                    <CollectionView ItemsSource="{Binding MoneySendQueryData}" SelectionMode="None"
+                                    VerticalScrollBarVisibility="Never">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical" ItemSpacing="15" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <ui:MaterialCard CornerRadius="2" Elevation="3"
+                                                 Padding="5,5,5,5"
+                                                 IsClickable="False"
+                                                 IsClippedToBounds="True">
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="{Binding Logo}" Aspect="AspectFit"
+                                               VerticalOptions="Start"
+                                               WidthRequest="80"
+                                               HeightRequest="60" />
+                                        <StackLayout Margin="5,0,0,0">
+                                            <ui:MaterialLabel FontSize="20" Text="{Binding System}" />
+                                            <ui:MaterialLabel FontSize="16" Text="{Binding Comission}" />
+                                            <StackLayout Orientation="Horizontal">
+                                                <ui:MaterialLabel FontSize="16" Text="где отправить" TextColor="Blue"
+                                                                  TextDecorations="Underline">
+                                                    <ui:MaterialLabel.GestureRecognizers>
+                                                        <TapGestureRecognizer
+                                                            Command="{Binding Source={x:Reference ContentView}, Path=BindingContext.UrlTappedCommand}"
+                                                            CommandParameter="{Binding CountryToAddressesLink}" />
+                                                    </ui:MaterialLabel.GestureRecognizers>
+                                                </ui:MaterialLabel>
+                                                <ui:MaterialLabel FontSize="16" Text="где получить" TextColor="Blue"
+                                                                  TextDecorations="Underline">
+                                                    <ui:MaterialLabel.GestureRecognizers>
+                                                        <TapGestureRecognizer
+                                                            Command="{Binding Source={x:Reference ContentView}, Path=BindingContext.UrlTappedCommand}"
+                                                            CommandParameter="{Binding CountryFromAddressesLink}" />
+                                                    </ui:MaterialLabel.GestureRecognizers>
+                                                </ui:MaterialLabel>
+                                            </StackLayout>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </ui:MaterialCard>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </StackLayout>
+        </RefreshView>
+    </ContentView.Content>
+</ContentView>
