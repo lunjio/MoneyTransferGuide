@@ -1,5 +1,6 @@
 ﻿using FFImageLoading.Forms.Platform;
 using Foundation;
+using PanCardView.iOS;
 using Prism;
 using Prism.Ioc;
 using Sharpnado.Presentation.Forms.iOS;
@@ -31,6 +32,7 @@ namespace MoneyTransferGuide.iOS
             Plugin.MaterialDesignControls.iOS.Renderer.Init();
             SharpnadoInitializer.Initialize();
             XF.Material.iOS.Material.Init();
+            CardsViewRenderer.Preserve();
             LoadApplication(new App(new iOSInitializer()));
             //Xamarin.Forms.Nuke.FormsHandler.Init();
             return base.FinishedLaunching(app, options);

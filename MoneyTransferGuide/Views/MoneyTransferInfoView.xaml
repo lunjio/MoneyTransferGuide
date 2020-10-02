@@ -23,11 +23,8 @@
                             FontSize="22" />
                     </Expander.Header>
                     <Expander.Content>
-                        <StackLayout />
-                    </Expander.Content>
-                </Expander>
-                <StackLayout IsVisible="{Binding Source={x:Reference Name=Expander}, Path=IsExpanded}">
-                    <ui:MaterialTextField Choices="{Binding Countries}"
+                        <StackLayout>
+                            <ui:MaterialTextField Choices="{Binding Countries}"
                                           ChoicesResultBindingName="Name"
                                           InputType="Choice"
                                           ChoiceSelectedCommand="{Binding OnCountryFromChangedCommand}"
@@ -36,44 +33,51 @@
                                           BackgroundColor="{DynamicResource Material.Color.Background}"
                                           UnderlineColor="{DynamicResource Material.Color.PrimaryVariant}"
                                           ChoicesBindingName="Name"
+                                          LayoutChanged="Layout_OnLayoutChanged"
                                           AlwaysShowUnderline="True"
                                           Placeholder="Страна отправления"
                                           SelectedChoice="{Binding CountryFrom}" />
-                    <ui:MaterialTextField Choices="{Binding Countries}"
+                            <ui:MaterialTextField Choices="{Binding Countries}"
                                           ChoicesResultBindingName="Name"
                                           BackgroundColor="{DynamicResource Material.Color.Background}"
                                           UnderlineColor="{DynamicResource Material.Color.PrimaryVariant}"
                                           ErrorText="Укажите страну получения"
+                                          LayoutChanged="Layout_OnLayoutChanged"
                                           ChoiceSelectedCommand="{Binding OnCountryToChangedCommand}"
                                           HasError="{Binding CountryToIsUnfilled}"
                                           InputType="Choice"
                                           ChoicesBindingName="Name"
                                           AlwaysShowUnderline="True"
                                           Placeholder="Страна получения"
-                                          SelectedChoice="{Binding CountryTo}" />
-                    <materialDesignControls:MaterialChipsGroup SelectedItem="{Binding Currency}"
+                                          SelectedChoice="{Binding CountryTo}"/>
+                            <materialDesignControls:MaterialChipsGroup SelectedItem="{Binding Currency}"
                                                                SelectedBackgroundColor="{DynamicResource Material.Color.PrimaryVariant}"
                                                                SelectedTextColor="{DynamicResource Material.Color.OnBackground}">
-                        <materialDesignControls:MaterialChipsGroup.ItemsSource>
-                            <x:Array Type="{x:Type x:String}">
-                                <x:String>RUR</x:String>
-                                <x:String>USD</x:String>
-                                <x:String>EUR</x:String>
-                            </x:Array>
-                        </materialDesignControls:MaterialChipsGroup.ItemsSource>
-                    </materialDesignControls:MaterialChipsGroup>
-                    <ui:MaterialTextField InputType="Numeric" Text="{Binding Summ}"
+                                <materialDesignControls:MaterialChipsGroup.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String>RUR</x:String>
+                                        <x:String>USD</x:String>
+                                        <x:String>EUR</x:String>
+                                    </x:Array>
+                                </materialDesignControls:MaterialChipsGroup.ItemsSource>
+                            </materialDesignControls:MaterialChipsGroup>
+                            <ui:MaterialTextField InputType="Numeric" Text="{Binding Summ}"
                                           AlwaysShowUnderline="True"
                                           ErrorText="Укажите сумму перевода"
                                           HasError="{Binding SummIsUnfilled}"
                                           BackgroundColor="{DynamicResource Material.Color.Background}"
                                           UnderlineColor="{DynamicResource Material.Color.PrimaryVariant}"
                                           Placeholder="Сумма перевода" />
-                    <ui:MaterialButton Command="{Binding GetMoneySendInfoCommand}"
+                            <ui:MaterialButton Command="{Binding GetMoneySendInfoCommand}"
                                        TextColor="{DynamicResource Material.Color.OnBackground}"
                                        BorderColor="{DynamicResource PrimaryLightColor}" Text="Показать"
                                        BackgroundColor="{DynamicResource Material.Color.PrimaryVariant}"
                                        ButtonType="Elevated" />
+                        </StackLayout>
+                    </Expander.Content>
+                </Expander>
+                <StackLayout IsVisible="{Binding Source={x:Reference Name=Expander}, Path=IsExpanded}">
+                    
                 </StackLayout>
                 <StackLayout
                     IsVisible="{Binding Source={x:Reference Name=Expander}, Path=IsExpanded, Converter={converters:BooleanInverseConverter}}">

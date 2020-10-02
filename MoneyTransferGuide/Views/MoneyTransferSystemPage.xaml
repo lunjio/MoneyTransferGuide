@@ -7,12 +7,14 @@
    xmlns:tabs="clr-namespace:Sharpnado.Presentation.Forms.CustomViews.Tabs;assembly=Sharpnado.Presentation.Forms"
    xmlns:local="clr-namespace:MoneyTransferGuide.Views;assembly=MoneyTransferGuide"
    xmlns:customViews="clr-namespace:Sharpnado.Presentation.Forms.CustomViews;assembly=Sharpnado.Presentation.Forms"
+   xmlns:panCardView="clr-namespace:PanCardView;assembly=PanCardView"
+   xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
    x:Class="MoneyTransferGuide.Views.MoneyTransferSystemPage">
     <ContentPage.Content>
         <Grid Margin="10,10,10,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <ui:MaterialCard Grid.Row="0" CornerRadius="2" Elevation="3"
@@ -37,26 +39,29 @@
                     </StackLayout>
                 </StackLayout>
             </ui:MaterialCard>
-                <tabs:ViewSwitcher x:Name="Switcher"
-                               Grid.Row="2"
-                               Animate="True"
-                               SelectedIndex="{Binding SelectedViewModelIndex, Mode=TwoWay}">
-                <customViews:LazyView x:TypeArguments="local:TextTabView" BindingContext="{Binding InfoTextTabViewModel}"/>
-                <customViews:LazyView x:TypeArguments="local:TextTabView" BindingContext="{Binding ContactsTextTabViewModel}"/>
-                
-            </tabs:ViewSwitcher>
-            <tabs:TabHostView Grid.Row="1"
-                              x:Name="TabHostView"
-                              BackgroundColor="WhiteSmoke"
-                              TabType="Fixed"
-                              SelectedIndex="{Binding Source={x:Reference Switcher}, Path=SelectedIndex, Mode=TwoWay}">
-                <tabs:TabHostView.Tabs>
-                    <tabs:UnderlinedTabItem SelectedTabColor="{DynamicResource Material.Color.Secondary}"
-                                            UnselectedLabelColor="{DynamicResource Material.Color.Primary}" Label="О системе"/>
-                    <tabs:UnderlinedTabItem SelectedTabColor="{DynamicResource Material.Color.Secondary}" 
-                                            UnselectedLabelColor="{DynamicResource Material.Color.Primary}" Label="Телефоны"/>
-                </tabs:TabHostView.Tabs>
-            </tabs:TabHostView>
+            <controls:TabsControl 
+                StripeColor="{DynamicResource Material.Color.PrimaryVariant}"
+                BackgroundColor="{DynamicResource Material.Color.Surface}"
+                Grid.Row="1" StripePosition="Bottom" BindingContext="{x:Reference CarouselView}">
+                <controls:TabsControl.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView>
+                            <ui:MaterialLabel WidthRequest="200" Text="{Binding Title}" FontSize="{OnIdiom Tablet=22, Phone=20}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center"/>
+                        </ContentView>
+                    </DataTemplate>
+                </controls:TabsControl.ItemTemplate>
+            </controls:TabsControl>
+            <panCardView:CarouselView BackgroundColor="{DynamicResource Material.Color.Surface}" x:Name="CarouselView" Grid.Row="2" IsCyclical="False" SelectedIndex="{Binding SelectedInfIndex}" ItemsSource="{Binding ContactSystemInf}">
+                <panCardView:CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <ScrollView>
+                            <StackLayout>
+                                <ui:MaterialLabel Text="{Binding Content}" FontSize="{OnIdiom Tablet=20, Phone=18}" TextType="Html"/>
+                            </StackLayout>
+                        </ScrollView>
+                    </DataTemplate>
+                </panCardView:CarouselView.ItemTemplate>
+            </panCardView:CarouselView>
         </Grid>
     </ContentPage.Content>
 </helpers:MaterialContentPage>

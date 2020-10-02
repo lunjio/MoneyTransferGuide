@@ -21,16 +21,17 @@
                 <customViews:LazyView x:TypeArguments="local:MoneyTransferSystemsView" BindingContext="{Binding MoneyTransferSystemsViewModel}"/>
         </tabs:ViewSwitcher>
         <tabs:TabHostView Grid.Row="1"
+                              Padding="0,0,0,0"
                               x:Name="TabHostView"
                               BackgroundColor="WhiteSmoke"
                               TabType="Fixed"
                               SelectedIndex="{Binding Source={x:Reference Switcher}, Path=SelectedIndex, Mode=TwoWay}">
             <tabs:TabHostView.Tabs>
-                <tabs:BottomTabItem IconImageSource="money_bill.png" 
+                    <tabs:BottomTabItem Padding="0,0,0,0" IconImageSource="money_bill.png" 
                                     
                                         SelectedTabColor="{DynamicResource Material.Color.Secondary}" 
                                         UnselectedIconColor="{DynamicResource Material.Color.Primary}" IsTextVisible="True" Label="Переводы"/>
-                <tabs:BottomTabItem IconImageSource="landmark.png" 
+                    <tabs:BottomTabItem Padding="0,0,0,0" IconImageSource="landmark.png" 
                                         SelectedTabColor="{DynamicResource Material.Color.Secondary}"
                                         UnselectedIconColor="{DynamicResource Material.Color.Primary}" IsTextVisible="True" Label="Денежные системы"/>
             </tabs:TabHostView.Tabs>

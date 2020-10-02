@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using MoneyTransferGuide.Helpers;
 using MoneyTransferGuide.Model;
 using MoneyTransferGuide.Services;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Navigation;
 using Sharpnado.Tasks;
 using Xamarin.Essentials;
@@ -16,7 +18,6 @@ namespace MoneyTransferGuide.ViewModels
 {
     public class MoneyTransferInfoViewModel : ViewModelBase
     {
-
         private IMaterialModalPage LoadingDialog { get; set; }
 
         private IMoneyTransferGuideService MoneyTransferGuideService { get; }
@@ -88,7 +89,6 @@ namespace MoneyTransferGuide.ViewModels
             GetMoneySendInfoCommand = new DelegateCommand((() =>
             {
                 TaskMonitor.Create(GetMoneySendInfoAsync);
-
             }));
 
             UrlTappedCommand = new DelegateCommand<string>(
@@ -138,7 +138,7 @@ namespace MoneyTransferGuide.ViewModels
                 new Country() {Code = "USA", Name = "США"},
                 new Country() {Code = "CZE", Name = "Чехия"},
             };
-            }
+        }
 
         private async Task GetMoneySendInfoAsync()
         {

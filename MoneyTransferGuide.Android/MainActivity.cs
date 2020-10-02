@@ -2,6 +2,7 @@
 using Android.Content.PM;
 using Android.OS;
 using FFImageLoading.Forms.Platform;
+using PanCardView.Droid;
 using Prism;
 using Prism.Ioc;
 using Sharpnado.Presentation.Forms.Droid;
@@ -33,6 +34,7 @@ namespace MoneyTransferGuide.Droid
             SharpnadoInitializer.Initialize();
             Plugin.MaterialDesignControls.Android.Renderer.Init();
             XF.Material.Droid.Material.Init(this, savedInstanceState);
+            CardsViewRenderer.Preserve();
             LoadApplication(new App(new AndroidInitializer()));
         }
 
