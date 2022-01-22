@@ -15,7 +15,6 @@ using Xamarin.Forms.Xaml;
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace MoneyTransferGuide
 {
-    [AutoRegisterForNavigation]
     public partial class App
     {
         /* 
@@ -38,13 +37,13 @@ namespace MoneyTransferGuide
                 {
                     PrismApplicationBase.Current.Resources.MergedDictionaries.Clear();
                     PrismApplicationBase.Current.Resources.MergedDictionaries.Add(new DarkTheme());
-                    XF.Material.Forms.Material.Init(this, "Material.DarkConfiguration");
+                    XF.Material.Forms.Material.Use("Material.DarkConfiguration"); 
                 }
                 else
                 {
                     PrismApplicationBase.Current.Resources.MergedDictionaries.Clear();
                     PrismApplicationBase.Current.Resources.MergedDictionaries.Add(new LightTheme());
-                    XF.Material.Forms.Material.Init(this, "Material.LightConfiguration");
+                    XF.Material.Forms.Material.Use("Material.LightConfiguration");
                 }
 
             };
@@ -53,8 +52,8 @@ namespace MoneyTransferGuide
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            XF.Material.Forms.Material.Init(this, "Material.LightConfiguration");
-            //await NavigationService.NavigateAsync("/StartPage");
+            XF.Material.Forms.Material.Init(this);
+            XF.Material.Forms.Material.Use("Material.LightConfiguration");
             await NavigationService.NavigateAsync("/CustomNavPage/MainPage");
         }
 

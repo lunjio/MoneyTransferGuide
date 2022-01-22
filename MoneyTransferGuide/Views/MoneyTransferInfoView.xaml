@@ -5,14 +5,15 @@
              xmlns:converters="clr-namespace:MoneyTransferGuide.Converters;assembly=MoneyTransferGuide"
              xmlns:ui="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              xmlns:materialDesignControls="clr-namespace:Plugin.MaterialDesignControls;assembly=Plugin.MaterialDesignControls"
+             xmlns:views="http://xamarin.com/schemas/2020/toolkit"
              x:Name="ContentView"
              x:Class="MoneyTransferGuide.Views.MoneyTransferInfoView">
     <ContentView.Content>
         <RefreshView x:Name="MainStackLayout" Command="{Binding DisplayMoneySendInfo}" IsRefreshing="{Binding IsBusy}"
                      RefreshColor="{DynamicResource Material.Color.PrimaryVariant}">
             <StackLayout Margin="10,0,10,0">
-                <Expander IsExpanded="{Binding IsExpanded, Mode=TwoWay}" x:Name="Expander">
-                    <Expander.Header>
+                <views:Expander IsExpanded="{Binding IsExpanded, Mode=TwoWay}" x:Name="Expander">
+                    <views:Expander.Header>
                         <Label
                             IsVisible="{Binding Source={x:Reference Name=Expander}, Path=IsExpanded, Converter={converters:BooleanInverseConverter}}"
                             Text="{Binding TransferParameters}"
@@ -21,10 +22,11 @@
                             TextDecorations="Underline"
                             TextColor="{DynamicResource Material.Color.Primary}"
                             FontSize="22" />
-                    </Expander.Header>
-                    <Expander.Content>
+                    </views:Expander.Header>
+                    <views:Expander.Content>
                         <StackLayout>
                             <ui:MaterialTextField Choices="{Binding Countries}"
+                                          x:Name="CountryFrom"
                                           ChoicesResultBindingName="Name"
                                           InputType="Choice"
                                           ChoiceSelectedCommand="{Binding OnCountryFromChangedCommand}"
@@ -39,6 +41,7 @@
                                           SelectedChoice="{Binding CountryFrom}" />
                             <ui:MaterialTextField Choices="{Binding Countries}"
                                           ChoicesResultBindingName="Name"
+                                          x:Name="CountryTo"
                                           BackgroundColor="{DynamicResource Material.Color.Background}"
                                           UnderlineColor="{DynamicResource Material.Color.PrimaryVariant}"
                                           ErrorText="Укажите страну получения"
@@ -74,8 +77,8 @@
                                        BackgroundColor="{DynamicResource Material.Color.PrimaryVariant}"
                                        ButtonType="Elevated" />
                         </StackLayout>
-                    </Expander.Content>
-                </Expander>
+                    </views:Expander.Content>
+                </views:Expander>
                 <StackLayout IsVisible="{Binding Source={x:Reference Name=Expander}, Path=IsExpanded}">
                     
                 </StackLayout>
@@ -101,22 +104,10 @@
                                             <ui:MaterialLabel FontSize="20" Text="{Binding System}" />
                                             <ui:MaterialLabel FontSize="16" Text="{Binding Comission}" />
                                             <StackLayout Orientation="Horizontal">
-                                                <ui:MaterialLabel FontSize="16" Text="где отправить" TextColor="Blue"
-                                                                  TextDecorations="Underline">
-                                                    <ui:MaterialLabel.GestureRecognizers>
-                                                        <TapGestureRecognizer
-                                                            Command="{Binding Source={x:Reference ContentView}, Path=BindingContext.UrlTappedCommand}"
-                                                            CommandParameter="{Binding CountryToAddressesLink}" />
-                                                    </ui:MaterialLabel.GestureRecognizers>
-                                                </ui:MaterialLabel>
-                                                <ui:MaterialLabel FontSize="16" Text="где получить" TextColor="Blue"
-                                                                  TextDecorations="Underline">
-                                                    <ui:MaterialLabel.GestureRecognizers>
-                                                        <TapGestureRecognizer
-                                                            Command="{Binding Source={x:Reference ContentView}, Path=BindingContext.UrlTappedCommand}"
-                                                            CommandParameter="{Binding CountryFromAddressesLink}" />
-                                                    </ui:MaterialLabel.GestureRecognizers>
-                                                </ui:MaterialLabel>
+                                                <Button HeightRequest="35" WidthRequest="120" VerticalOptions="Center" TextColor="White" BackgroundColor="{DynamicResource Material.Color.Primary}" Text="где отправить" Command="{Binding Source={x:Reference ContentView}, Path=BindingContext.UrlTappedCommand}"
+                                                                   CommandParameter="{Binding CountryToAddressesLink}"/>
+                                                <Button HeightRequest="35" WidthRequest="120" VerticalOptions="Center" TextColor="White" BackgroundColor="{DynamicResource Material.Color.Primary}" Text="где получить"  Command="{Binding Source={x:Reference ContentView}, Path=BindingContext.UrlTappedCommand}"
+                                                        CommandParameter="{Binding CountryFromAddressesLink}"/>
                                             </StackLayout>
                                         </StackLayout>
                                     </StackLayout>
